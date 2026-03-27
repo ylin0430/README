@@ -18,7 +18,6 @@
     --accent:#4f46e5;
 }
 
-/* 背景（柔和淺色） */
 body{
     margin:0;
     font-family:'Noto Sans TC',sans-serif;
@@ -38,13 +37,18 @@ header{
     border-radius:50%;
     border:3px solid var(--border);
     box-shadow:0 4px 15px rgba(0,0,0,0.08);
+    cursor:pointer;
+    transition:0.3s;
+}
+.profile-img:hover{
+    transform:scale(1.05);
 }
 
 h1{margin:10px 0 5px;}
 .subtitle{color:var(--sub);}
 .career{color:var(--accent);font-size:0.9rem;}
 
-/* 主排版 */
+/* layout */
 .layout{
     display:grid;
     grid-template-columns: 300px 1fr;
@@ -54,7 +58,7 @@ h1{margin:10px 0 5px;}
     padding:20px;
 }
 
-/* 卡片 */
+/* card */
 .card{
     background:var(--card);
     border:1px solid var(--border);
@@ -63,7 +67,6 @@ h1{margin:10px 0 5px;}
     box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* 標題 */
 .title{
     color:var(--accent);
     margin-bottom:15px;
@@ -71,7 +74,6 @@ h1{margin:10px 0 5px;}
     font-weight:600;
 }
 
-/* 左側 */
 .sidebar .info-item{
     margin-bottom:10px;
     font-size:0.95rem;
@@ -82,7 +84,7 @@ h1{margin:10px 0 5px;}
     margin-right:8px;
 }
 
-/* 技能 */
+/* skills */
 .skill{
     margin-bottom:14px;
     font-size:0.9rem;
@@ -107,10 +109,28 @@ h1{margin:10px 0 5px;}
     border-left:3px solid #e0e7ff;
 }
 
-/* 文字 */
 p{
     color:var(--sub);
     margin:5px 0;
+}
+
+/* 圖片放大 */
+.image-modal{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+}
+.image-modal img{
+    max-width:80%;
+    max-height:80%;
+    border-radius:10px;
 }
 
 /* 響應式 */
@@ -123,9 +143,14 @@ p{
 </head>
 
 <body>
-    
+
+<!-- 🎵 背景音樂 -->
+<audio autoplay loop controls style="position:fixed; bottom:10px; right:10px; z-index:999;">
+    <source src="mymusic.mp3" type="audio/mpeg">
+</audio>
+
 <header>
-    <img src="IMG_3882.jpeg" class="profile-img">
+    <img src="IMG_3882.jpeg" class="profile-img" onclick="openImage(this.src)">
     <h1>柯靜宜</h1>
     <div class="subtitle">亞洲大學 | 學號：114024010</div>
     <div class="career">求職意向：輕鬆、有創作力的崗位</div>
@@ -133,7 +158,6 @@ p{
 
 <div class="layout">
 
-<!-- 左側 -->
 <div class="sidebar">
 
 <div class="card">
@@ -179,7 +203,6 @@ p{
 
 </div>
 
-<!-- 右側 -->
 <div class="main">
 
 <div class="card">
@@ -188,15 +211,12 @@ p{
 <div class="timeline-item">
 <strong>2025 - 至今</strong>
 <p>亞洲大學 - 資訊傳播學系</p>
-<p>學士學位 | 學號：114024010</p>
-<p>主要課程：程式設計、資料結構、人工智慧、數位內容創作</p>
-<p>GPA：3.2/4.0（可根據實際情況修改）</p>
+<p>學士學位</p>
 </div>
 
 <div class="timeline-item">
 <strong>2022 - 2025</strong>
 <p>高中就讀學校</p>
-<p>普通高中 | 資訊相關選修課程</p>
 </div>
 
 </div>
@@ -207,16 +227,12 @@ p{
 <div class="timeline-item">
 <strong>2024 - 2025</strong>
 <p>學校專案開發團隊</p>
-<p>內容創作與影像編輯</p>
-<p>負責校園活動影像拍攝、後期剪輯與數位內容製作</p>
-<p>完成30+場校園活動影像紀錄</p>
+<p>影像剪輯與內容創作</p>
 </div>
 
 <div class="timeline-item">
 <strong>2023 - 2024</strong>
-<p>校園環境維護志工</p>
-<p>志工隊員</p>
-<p>參與校園環境整理、公共區域清潔，協助活動場地佈置</p>
+<p>校園志工</p>
 </div>
 
 </div>
@@ -224,14 +240,19 @@ p{
 <div class="card">
 <div class="title">自我介紹</div>
 <p>
-您好，我是亞洲大學資訊傳播學系的柯靜宜（學號：114024010），具備數位內容創作相關的基礎知識與實踐經驗，擁有積極的學習態度和強烈的責任感。<br><br>
-我善於傾聽他人意見，具備良好的溝通能力與問題解決思維，在參與校園專案的過程中，累積了影像拍攝、後期製作與團隊協作的經驗。我對創作類工作充滿熱情，願意主動學習新技能，並將所學應用於實際工作中。<br><br>
-我期待能加入充滿創意與活力的團隊，在實踐中持續成長，同時為團隊的發展貢獻自己的力量。
+您好，我是亞洲大學資訊傳播學系的柯靜宜。<br><br>
+我對創作與影像製作充滿熱情，並具備良好的學習能力與團隊合作精神。<br><br>
+希望未來能在創意產業發展。
 </p>
 </div>
 
 </div>
 
+</div>
+
+<!-- 圖片放大 -->
+<div class="image-modal" id="imgModal" onclick="closeImage()">
+    <img id="modalImg">
 </div>
 
 <script>
@@ -240,6 +261,15 @@ document.querySelectorAll(".skill-level").forEach(el=>{
         el.style.width = el.dataset.level + "%";
     },300);
 });
+
+function openImage(src){
+    document.getElementById("imgModal").style.display = "flex";
+    document.getElementById("modalImg").src = src;
+}
+
+function closeImage(){
+    document.getElementById("imgModal").style.display = "none";
+}
 </script>
 
 </body>
